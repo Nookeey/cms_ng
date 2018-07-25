@@ -23,9 +23,10 @@ export class PagesService {
     // });
     // this.setPageVisible(15);
     // this.setPageInvisible(15);
-
+    // this.setPageContent(15, 'jdshfkjhds hfkjdsakjfhkldhasfkljhdskjfhkjdhasflj');
+    // this.addNewPage('cos', 'cos');
+    // this.deletePage(24);
   }
-
 
   getAllPages(): Observable<Array<Page>> {
     const url = this.BASE_URL + 'key/' + this.API_KEY;
@@ -53,6 +54,36 @@ export class PagesService {
       });
   }
 
+  setPageContent(id: number, content: string) {
+    const url = this.BASE_URL + id + '/update-content/key/' + this.API_KEY;
+    const body = {content: content};
+    this.http.post(url, body, {responseType: 'json'})
+      .subscribe(e => {
+        console.log(e);
+      });
+  }
+
+  addNewPage(name: string, slug: string) {
+    const url = this.BASE_URL + 'add/key/' + this.API_KEY;
+    const body = {
+      name: name,
+      slug: slug,
+      created_at: new Date().toLocaleString,
+      updated_at: new Date().toLocaleString
+    };
+    this.http.post(url, body, {responseType: 'json'})
+      .subscribe(e => {
+        console.log(e);
+      });
+  }
+
+  deletePage(id: number) {
+    const url = this.BASE_URL + id + '/delete/key/' + this.API_KEY;
+    this.http.delete(url)
+      .subscribe(e => {
+        console.log(e);
+      });
+  }
 
 }
 
