@@ -13,72 +13,71 @@ export class PagesService {
 
   private pagesObs = new BehaviorSubject<Array<Page>>([]);
 
-  constructor(private http: HttpClient, private authService: AuthService) {
-
-    this.getAllPages().subscribe(e => {
-      console.log(e);
-    });
-    // this.getPage(15).subscribe(e => {
-    //   console.log(e);
-    // });
-    // this.setPageVisible(15);
-    // this.setPageInvisible(15);
-    // this.setPageContent(15, 'jdshfkjhds hfkjdsakjfhkldhasfkljhdskjfhkjdhasflj');
-    // this.addNewPage('cos', 'cos');
-    // this.deletePage(24);
-  }
+  constructor(private http: HttpClient, private authService: AuthService) {}
 
   getAllPages(): Observable<Array<Page>> {
     const url = this.BASE_URL + 'key/' + this.API_KEY;
     return this.http.get<Array<Page>>(url, {responseType: 'json'});
   }
 
-  getPage(id: number): Observable<Page> {
+  setPagesObs() {
+    this.getAllPages().subscribe(e => {
+      this.pagesObs.next(e);
+    });
+  }
+
+  getPagesObs(): Observable<Array<Page>> {
+    try {
+      this.setPagesObs();
+    } catch (error) {
+      console.log(error);
+    }
+    return this.pagesObs.asObservable();
+  }
+
+  getPage(id: string): Observable<Page> {
     const url = this.BASE_URL + id + '/key/' + this.API_KEY;
     return this.http.get<Page>(url, {responseType: 'json'});
   }
 
-  setPageVisible(id: number) {
-    const url = this.BASE_URL + id + '/set-visible/key/' + this.API_KEY;
+  setPageVisible(page: Page) {
+    const url = this.BASE_URL + page.id + '/set-visible/key/' + this.API_KEY;
     this.http.put(url, {responseType: 'json'})
       .subscribe(e => {
         console.log(e);
       });
   }
 
-  setPageInvisible(id: number) {
-    const url = this.BASE_URL + id + '/set-invisible/key/' + this.API_KEY;
+  setPageInvisible(page: Page) {
+    const url = this.BASE_URL + page.id + '/set-invisible/key/' + this.API_KEY;
     this.http.put(url, {responseType: 'json'})
       .subscribe(e => {
         console.log(e);
       });
   }
 
-  setPageContent(id: number, content: string) {
-    const url = this.BASE_URL + id + '/update-content/key/' + this.API_KEY;
-    const body = {content: content};
+  setPageContent(page: Page) {
+    const url = this.BASE_URL + page.id + '/update-content/key/' + this.API_KEY;
+    const body = {content: page.content};
     this.http.post(url, body, {responseType: 'json'})
       .subscribe(e => {
         console.log(e);
       });
   }
 
-  addNewPage(name: string, slug: string) {
+  addNewPage(page: Page) {
     const url = this.BASE_URL + 'add/key/' + this.API_KEY;
-    const body = {
-      name: name,
-      slug: slug,
-      created_at: new Date().toLocaleString,
-      updated_at: new Date().toLocaleString
-    };
+    const body = { name: page.name, slug: page.slug };
     this.http.post(url, body, {responseType: 'json'})
       .subscribe(e => {
         console.log(e);
       });
   }
 
-  deletePage(id: number) {
-    const url = this.BASE_URL + id + '/delete/key/' + this.API_KEY;
+  deletePage(page: Page) {
+    const pages = this.pagesObs.getValue().filter(e => e !== page);
+    this.pagesObs.next(pages);
+    const url = this.BASE_URL + page.id + '/delete/key/' + this.API_KEY;
     this.http.delete(url)
       .subscribe(e => {
         console.log(e);

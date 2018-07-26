@@ -1,0 +1,25 @@
+<table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>name</th>
+      <th>slug</th>
+      <th>content</th>
+      <th>visible</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let page of pages">
+      <th>{{page.id}}</th>
+      <td>{{page.name}}</td>
+      <td>{{page.slug}}</td>
+      <td>{{page.content}}</td>
+      <td>{{page.visibility}}</td>
+      <td>
+        <button [routerLink]="[page.id]">zobacz</button>
+        <button (click)="delete(page)">usuń</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

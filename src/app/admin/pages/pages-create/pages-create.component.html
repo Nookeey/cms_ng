@@ -1,0 +1,11 @@
+<form [formGroup]="pageForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label>Name</label>
+    <input type="text" id="name" formControlName="name" placeholder="Name">
+  </div>
+  <div>
+    <label>Slug</label>
+    <input type="text" id="slug" formControlName="slug" placeholder="Slug">
+  </div>
+  <button type="submit">Submit</button>
+</form>

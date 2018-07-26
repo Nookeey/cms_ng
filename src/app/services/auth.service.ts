@@ -16,7 +16,7 @@ export class AuthService {
   private password = 'haslo';
 
   constructor(private http: HttpClient) {
-    this.login(this.email, this.password);
+    // this.login(this.email, this.password);
   }
 
   login(email: string, password: string) {
