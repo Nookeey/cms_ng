@@ -23,3 +23,9 @@
     </tr>
   </tbody>
 </table>
+<div *ngIf="pages.length == 0 noPages"></div>
+
+
+<ng-template #noPages>
+  <p>BRAK PODSTRON</p>
+</ng-template>

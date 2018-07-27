@@ -27,7 +27,7 @@ export class PagesCreateComponent implements OnInit {
     this.page.name = this.pageForm.value.name;
     this.page.slug = this.pageForm.value.slug;
     console.log(this.page);
-    this.pagesService.addNewPage(this.page);
+    this.pagesService.createNewPage(this.page);
     this.onReset();
   }
 

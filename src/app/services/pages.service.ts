@@ -56,7 +56,7 @@ export class PagesService {
       });
   }
 
-  setPageContent(page: Page) {
+  updatePageContent(page: Page) {
     const url = this.BASE_URL + page.id + '/update-content/key/' + this.API_KEY;
     const body = {content: page.content};
     this.http.post(url, body, {responseType: 'json'})
@@ -65,12 +65,13 @@ export class PagesService {
       });
   }
 
-  addNewPage(page: Page) {
+  createNewPage(page: Page) {
     const url = this.BASE_URL + 'add/key/' + this.API_KEY;
     const body = { name: page.name, slug: page.slug };
     this.http.post(url, body, {responseType: 'json'})
       .subscribe(e => {
         console.log(e);
+        this.setPagesObs();
       });
   }
 

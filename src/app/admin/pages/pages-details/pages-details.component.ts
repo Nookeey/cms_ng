@@ -46,7 +46,7 @@ export class PagesDetailsComponent implements OnInit {
 
   onSubmitContent() {
     this.page.content = this.contentForm.value.content;
-    console.log(this.page);
+    this.pagesService.updatePageContent(this.page);
   }
 
 }

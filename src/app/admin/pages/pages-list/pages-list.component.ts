@@ -12,12 +12,15 @@ export class PagesListComponent implements OnInit {
   pages: Array<Page> = [];
 
   constructor(private pagesService: PagesService) {
+    console.log('Pages list constructor');
+    this.pagesService.getPagesObs().subscribe((pages: Array<Page>) => {
+      this.pages = pages;
+      console.log(pages);
+    });
   }
 
   ngOnInit() {
-    this.pagesService.getPagesObs().subscribe((pages: Array<Page>) => {
-      this.pages = pages;
-    });
+    console.log('Pages list ngOnInit');
   }
 
   delete(page: Page) {

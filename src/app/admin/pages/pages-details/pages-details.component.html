@@ -10,11 +10,10 @@
   <button type="submit">Submit</button>
 </form>
 
-
 <form [formGroup]="contentForm" (ngSubmit)="onSubmitContent()">
   <div>
     <label>Content</label>
-    <textarea id="content" formControlName="content" cols="30" rows="10" [(ngModel)]="contentPrev"></textarea>
+    <textarea id="content" formControlName="content" cols="200" rows="10" [(ngModel)]="contentPrev"></textarea>
   </div>
   <button type="submit">Submit</button>
 </form>
